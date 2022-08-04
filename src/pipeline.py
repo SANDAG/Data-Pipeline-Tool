@@ -23,6 +23,9 @@ import os
 import pdb
 
 from collections import defaultdict
+from inspect import getmembers, isfunction
+
+import config.user_added_functions as user_added_functions
 
 # TODO: Handle warnings
 #       1. Warning - RuntimeWarning: The values in the array are unorderable.
@@ -53,6 +56,22 @@ def search_files(root_path, patterns):
         assert search_results, "No file identified by '{}'".format(pattern)
 
     return file_dict
+
+def load_user_defined_functions(data_dict):
+    """
+    Adds user-defined functions to memory
+
+    :data_dict: Dictionary containing pipeline data
+    """
+    #Read functions from user-added function script
+    user_fn = dict(getmembers(user_added_functions, isfunction))
+
+    #Vectorize functions
+    for fn in user_fn:
+        user_fn[fn] = np.vectorize(user_fn[fn])
+
+    #Add functions to `data_dict`
+    data_dict.update(user_fn)
 
 
 def extract_data(data_settings):
@@ -98,6 +117,9 @@ def extract_data(data_settings):
                     raise NotImplementedError(ftype_log)
 
                 data_dict[file_id] = data
+
+    # Load user-added functions
+    load_user_defined_functions(data_dict)
 
     return data_dict
 
@@ -422,6 +444,9 @@ def eval_expressions(expressions, data_dict):
     # Convert expression dict to a dict of data frames
     expression_results = coalesce_expressions(expression_dict)
 
+    # Load user-defined functions
+    load_user_defined_functions(expression_results)
+
     return expression_results
 
 
@@ -474,7 +499,7 @@ def write_results(results_dict, empty_fill, outdir):
     """
 
     for table_name in results_dict.keys():
-        if table_name.startswith('_'):
+        if table_name.startswith('_') or type(results_dict[table_name]) != pd.DataFrame:
             continue
         logging.info('Writing {}.csv'.format(table_name))
 
