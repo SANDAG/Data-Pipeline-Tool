@@ -16,6 +16,8 @@ To configure your data pipeline, you will need to edit the following three files
 
 - `expressions.csv`: Contains expressions to summarize data and controls how summary tables are written upon tool completion.
 
+- `user_added_functions.py`: Contains user-defined functions that can be called in the processor.
+
 The following describes the contents of these files and how they can be edited.
 
 ### `settings.yaml`
@@ -81,6 +83,10 @@ This file consists of the following fields. Please see [this](config/expressions
 - `In Col`: Field name of field in *In Table* to apply expression
 - `Func`: Pandas Series method to apply to *In Col* as defined by the [Pandas API](https://pandas.pydata.org/docs/reference/api/pandas.Series.html). Users can also specify a custom Python expression using the *Out Col* names of expressions previously evaluated (much like a measure in PowerBI) -- for such cases, *In Col*, *Filter*, and *In Table* do not need to be specified.
 - `Group`: Comma delimited field names of fields in *In Table* to use for group aggregations
+
+### `user_added_functions.py`
+
+Any function defined in this script will be able to be called in the processor.
 
 ## Running A Pipeline
 
