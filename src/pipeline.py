@@ -14,7 +14,7 @@ file in the 'config' directory of this tool.
 
 
 # Import libraries
-import openmatrix as omx
+#import openmatrix as omx
 import pandas as pd
 import numpy as np
 import logging

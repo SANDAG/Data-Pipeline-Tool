@@ -7,92 +7,32 @@
 
 # Specify data to extract and load
 extract:
-    - filepath: "T:/ABM/user/esanc/temp/test_report"
-      test_size:
+    - filepath: "D:/Models/RSM/visualizer/SimWrapper/data/external"
+      test_size: 
       data:
           - "persons.csv"
           - "households.csv"
-          - "mgraBasedInput.csv"
           - "individualTrips.csv"
           - "jointTrips.csv"
-          - "internalExternalTrips.csv"
-          - "airportCBXTrips.csv"
-          - "airportSANTrips.csv"
-          - "commercialVehicleTrips.csv"
-          - "crossBorderTrips.csv"
-          - "externalInternalTrips.csv"
-          - "externalExternalTrips.csv"
-          - "truckTrips.csv"
-          - "visitorTrips.csv"
           - "transit_onoff.csv"
-          - "hwyload_*.csv"
-          - "hwyTcad.csv"
-    - filepath: "T:/ABM/user/esanc/temp/test_other"
-      test_size:
-      data:
-          - "mgra_city_map.csv"
-          - "traffic_skims_MD.omx"
 
 # Specify transformation steps
 transform:
     processor: "config/processor.csv"
     summarizer: "config/expressions.csv"
     steps:
-        - name: step_0
-          process: True
         - name: step_1
           concat:
               - table_name: trips
                 include:
                     - individualTrips
                     - jointTrips
-                    - internalExternalTrips
-                    - airportCBXTrips
-                    - airportSANTrips
-                    - commercialVehicleTrips
-                    - crossBorderTrips
-                    - externalInternalTrips
-                    - externalExternalTrips
-                    - truckTrips
-                    - visitorTrips
-              - table_name: highway_load
-                include:
-                    - 'hwyload_*'
-          merge:
-              - table_name: city_trips
-                include:
-                    - trips
-                    - mgra_city_map
-                merge_cols:
-                    - originMGRA
-                    - MGRA
-                merge_type: left
-              - table_name: trips
-                include:
-                    - city_trips
-                    - persons
-                merge_cols:
-                    - personID
-                    - personId
-                merge_type: left
           process: True
-
+          
         - name: step_2
-          merge:
-              - table_name: network
-                include:
-                    - highway_network
-                    - highway_load
-                merge_cols:
-                    - ["ID", "timePeriod"]
-                    - ["ID1", "timePeriod"]
-                merge_type: left
-          process: True
-        
-        - name: step_3
           summarize: True
           process: True
 
 load:
-    outdir: "output/"
+    outdir: "D:/Models/RSM/visualizer/SimWrapper/data/processed/"
     empty_fill: 0
