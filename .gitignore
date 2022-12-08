@@ -6,3 +6,6 @@ __pycache__/
 # Outputs
 output/*
 !output/.gitkeep
+
+# VS Code
+.vscode
