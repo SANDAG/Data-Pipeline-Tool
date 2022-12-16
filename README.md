@@ -97,5 +97,5 @@ To run the configured pipeline, do the following:
 3. Activate the newly created environment: `conda activate pipeline`
 4. Change directory to the project folder
 5. Configure the data pipeline as described in *Configuring A Pipeline*
-6. Run the tool by executing the following: `python run.py`
+6. Run the tool by executing the following: `python run.py [config_directory]` (If no config directory is specified it will default to `config`)
 7. When the process finishes, all resulting summary files are written to the output directory specified in `settings.yaml`
