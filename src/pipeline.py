@@ -25,7 +25,7 @@ import pdb
 from collections import defaultdict
 from inspect import getmembers, isfunction
 
-import config.user_added_functions as user_added_functions
+import src.user_added_functions as user_added_functions
 
 # TODO: Handle warnings
 #       1. Warning - RuntimeWarning: The values in the array are unorderable.

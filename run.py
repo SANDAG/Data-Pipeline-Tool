@@ -1,13 +1,20 @@
 # Import libraries
 import pandas as pd
 import logging
+import sys
 import os
 import yaml
-
-import src.pipeline as pipeline
+from shutil import copy
 
 # Settings file path
-SETTINGS = 'config/settings.yaml'
+if len(sys.argv) == 1:
+    config_path = 'config'
+else:
+    config_path = sys.argv[1]
+SETTINGS = config_path + '/settings.yaml'
+copy(config_path + '/user_added_functions.py', 'src')
+
+import src.pipeline as pipeline
 
 
 def load_yaml(fp):
