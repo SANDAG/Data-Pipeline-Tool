@@ -239,6 +239,38 @@ def process(processor, data_dict):
                 ), globals(), data_dict
             )
 
+        # Create field of zeros
+        elif row['Type'] == 'zeros':
+            zeros_log = "Setting {} in {} to be a field of zeros of data type {}"
+            logging.info(
+                zeros_log.format(row['Out Col'], row['Table'], row['Func'])
+            )
+            data_dict[row['Table']][row['Out Col']] = np.zeros_like(row['Table'].index, row['Func'])
+
+        # Create field of ones
+        elif row['Type'] == 'ones':
+            ones_log = "Setting {} in {} to be a field of ones of data type {}"
+            logging.info(
+                ones_log.format(row['Out Col'], row['Table'], row['Func'])
+            )
+            data_dict[row['Table']][row['Out Col']] = np.ones_like(row['Table'].index, row['Func'])
+
+        # Shift field by given amount
+        elif row['Type'] == 'shift':
+            shift_log = "Setting {} in {} to be {} shifted by {}"
+            logging.info(
+                shift_log.format(row['Out Col'], row['Table'], row['In Col'], row['Func'])
+                )
+            data_dict[row['Table']][row['Out Col']] = data_dict[row['Table']][row['In Col']].shift(row['Func'])
+
+        # Fill null values
+        elif row['Type'] == 'fillna':
+            fillna_log = "Filling null values of {} in {} to be {} in {}"
+            logging.info(
+                fillna_log.format(row['In Col'], row['Table'], row['Func'], row['Out col'])
+            )
+            data_dict[row['Table']][row['Out Col']] = data_dict[row['Table']][row['In Col']].fillna(row['Func'])
+
         # Query skim O-D pairs
         elif row['Type'] == 'skim':
             skim_log = "Querying skim values from {} for columns {} in {}"
