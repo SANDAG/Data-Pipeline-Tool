@@ -7,31 +7,18 @@
 
 # Specify data to extract and load
 extract:
-    - filepath: "T:/ABM/user/esanc/temp/test_report"
+    - filepath: "input/demand"
       test_size:
       data:
-          - "persons.csv"
-          - "households.csv"
-          - "mgraBasedInput.csv"
-          - "individualTrips.csv"
-          - "jointTrips.csv"
-          - "internalExternalTrips.csv"
-          - "airportCBXTrips.csv"
-          - "airportSANTrips.csv"
-          - "commercialVehicleTrips.csv"
-          - "crossBorderTrips.csv"
-          - "externalInternalTrips.csv"
-          - "externalExternalTrips.csv"
-          - "truckTrips.csv"
-          - "visitorTrips.csv"
-          - "transit_onoff.csv"
-          - "hwyload_*.csv"
-          - "hwyTcad.csv"
-    - filepath: "T:/ABM/user/esanc/temp/test_other"
+          - "final_households.csv"
+          - "final_persons.csv"
+          - "final_tours.csv"
+          - "final_trips.csv"
+    - filepath: "input/supply"
       test_size:
       data:
-          - "mgra_city_map.csv"
-          - "traffic_skims_MD.omx"
+          - "land_use.csv"
+          - "dist.omx"
 
 # Specify transformation steps
 transform:

@@ -12,7 +12,7 @@ if len(sys.argv) == 1:
 else:
     config_path = sys.argv[1]
 SETTINGS = config_path + '/settings.yaml'
-copy(config_path + '/user_added_functions.py', 'src')
+copy(config_path + '/user_added_functions.py', os.path.join(os.path.dirname(os.path.abspath(__file__)), 'src'))
 
 import src.pipeline as pipeline
 
