@@ -91,6 +91,10 @@ def main():
     steps = transform['steps']
     load = settings['load']
 
+    # Create output directory if not there
+    if not os.path.isdir(load['outdir']):
+        os.mkdir(load['outdir'])
+
     # Initialize logger
     start_logger(load['outdir'])
 
