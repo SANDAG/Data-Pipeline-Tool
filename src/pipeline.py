@@ -108,7 +108,10 @@ def extract_data(data_settings):
 
                 file_path = os.path.join(source['filepath'], file_name)
                 if extension == '.csv':
-                    data = pd.read_csv(file_path, nrows=source['test_size'])
+                    if pd.__version__ >= '1.4':
+                        data = pd.read_csv(file_path, nrows=source['test_size'], engine = 'pyarrow')
+                    else:
+                        data = pd.read_csv(file_path, nrows=source['test_size'])
                 elif extension == '.omx':
                     data = omx.open_file(file_path, mode='r')
                 else:
@@ -426,7 +429,8 @@ def eval_expressions(expressions, data_dict):
                 expression += query_str
             if not pd.isnull(row['Group']):
                 group_list = row['Group'].split(',')
-                group_str = ".groupby({}, dropna=False)".format(group_list)
+                selection_list = group_list + [row['In Col']]
+                group_str = "[{}].groupby({}, dropna=False)".format(selection_list, group_list)
                 expression += group_str
             expression += "['{}'].{}()".format(row['In Col'], row['Func'])
 
